@@ -11,7 +11,14 @@ const Button = ({ handleClick, text }) => {
   }
 
 const Statistics = (props) => {
-    return (
+
+    if (props.totalScore == "0")
+    {
+        return <p>Ei yhtään palautetta annettu</p>
+    }
+    else
+    {
+        return (
         <div>
           <Part label={props.labels.good}
                 score={props.goodScore} />
@@ -28,7 +35,8 @@ const Statistics = (props) => {
                 score={props.positivesFractionScore}
                 unit={'%'} />
         </div>
-      )
+        )
+    }
 }
 
 const Part = (props) => {
