@@ -10,37 +10,8 @@ const Button = ({ handleClick, text }) => {
       {text}</button>
   }
 
-const Statistics = (props) => {
-
-    if (props.totalScore == "0")
-    {
-        return <p>Ei yhtään palautetta annettu</p>
-    }
-    else
-    {
-        return (
-        <div>
-          <Part label={props.labels.good}
-                score={props.goodScore} />
-          <Part label={props.labels.neutral}
-                score={props.neutralScore} />
-          <Part label={props.labels.bad}
-                score={props.badScore} />
-
-          <Part label={props.labels.total}
-                score={props.totalScore} />
-          <Part label={props.labels.average}
-                score={props.averageScore} />
-          <Part label={props.labels.positivesFraction}
-                score={props.positivesFractionScore}
-                unit={'%'} />
-        </div>
-        )
-    }
-}
-
-const Part = (props) => {
-    return <p>{props.label} {props.score} {props.unit}</p>
+const Statistic = (props) => {
+    return <p>{props.text} {props.value} {props.unit}</p>
 }
 
 const App = () => {
@@ -54,44 +25,48 @@ const App = () => {
   let average = (good - bad) / total
   let positivesFraction = good / total * 100
 
-  const headerLabels =
-  {
-    firstHeader: 'anna palautetta',
-    secondHeader: 'statistiikka'
-  }
-  const scoreLabels =
-  {
-    good: 'hyvä',
-    neutral: 'neutraali',
-    bad: 'huono',
-    total: 'yhteensä',
-    average: 'keskiarvo',
-    positivesFraction: 'positiivisia'
-  }
-
-  return (
+  if (total !== 0) {
+    return (
     <div>
-      <Header name={headerLabels.firstHeader} />
-      <Button
+    <Header name='anna palautetta' />
+    <Button
         handleClick={() => setGood(good + 1)}
-        text={scoreLabels.good} />
-      <Button
+        text='hyvä' />
+    <Button
         handleClick={() => setNeutral(neutral + 1)}
-        text={scoreLabels.neutral} />
-      <Button
+        text='neutraali' />
+    <Button
         handleClick={() => setBad(bad + 1)}
-        text={scoreLabels.bad} />
-      <Header name={headerLabels.secondHeader} />
-      <Statistics
-        labels={scoreLabels}
-        goodScore={good}
-        neutralScore={neutral}
-        badScore={bad}
-        totalScore={total}
-        averageScore={average}
-        positivesFractionScore={positivesFraction} />
+        text='huono' />
+    <Header name='statistiikka' />
+    <Statistic text="hyvä" value ={good} />
+    <Statistic text="neutraali" value ={neutral} />
+    <Statistic text="huono" value ={bad} />
+    <Statistic text="yhteensä" value ={total} />
+    <Statistic text="keskiarvo" value ={average} />
+    <Statistic text="positiivisia" value ={positivesFraction}
+                unit='%' />
     </div>
-  )
+    )
+  }
+  else {
+    return (
+    <div>
+    <Header name='anna palautetta' />
+    <Button
+        handleClick={() => setGood(good + 1)}
+        text='hyvä' />
+    <Button
+        handleClick={() => setNeutral(neutral + 1)}
+        text='neutraali' />
+    <Button
+        handleClick={() => setBad(bad + 1)}
+        text='huono' />
+    <Header name='statistiikka' />
+    <p>Ei yhtään palautetta annettu</p>
+    </div>
+    )
+  }
 }
 
 ReactDOM.render(<App />, 
