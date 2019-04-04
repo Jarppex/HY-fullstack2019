@@ -10,7 +10,7 @@ const Button = ({ handleClick, text }) => {
       {text}</button>
   }
 
-const Content = (props) => {
+const Statistics = (props) => {
     return (
         <div>
           <Part label={props.labels.good}
@@ -74,7 +74,7 @@ const App = () => {
         handleClick={() => setBad(bad + 1)}
         text={scoreLabels.bad} />
       <Header name={headerLabels.secondHeader} />
-      <Content
+      <Statistics
         labels={scoreLabels}
         goodScore={good}
         neutralScore={neutral}
