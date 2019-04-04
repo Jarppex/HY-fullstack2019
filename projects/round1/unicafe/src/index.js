@@ -6,24 +6,33 @@ const Header = ({name}) => {
 }
 
 const Button = ({ handleClick, text }) => {
-    console.log('renderButton')
-    return (<button onClick={handleClick}>
-      {text}
-    </button>)
+    return <button onClick={handleClick}>
+      {text}</button>
   }
 
 const Content = (props) => {
     return (
         <div>
-          <Part label={props.labels.good} score={props.goodScore} />
-          <Part label={props.labels.neutral} score={props.neutralScore} />
-          <Part label={props.labels.bad} score={props.badScore} />
+          <Part label={props.labels.good}
+                score={props.goodScore} />
+          <Part label={props.labels.neutral}
+                score={props.neutralScore} />
+          <Part label={props.labels.bad}
+                score={props.badScore} />
+
+          <Part label={props.labels.total}
+                score={props.totalScore} />
+          <Part label={props.labels.average}
+                score={props.averageScore} />
+          <Part label={props.labels.positivesFraction}
+                score={props.positivesFractionScore}
+                unit={'%'} />
         </div>
       )
 }
 
 const Part = (props) => {
-    return <p>{props.label} {props.score}</p>
+    return <p>{props.label} {props.score} {props.unit}</p>
 }
 
 const App = () => {
@@ -33,18 +42,28 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
-  const firstHeader = 'anna palautetta'
-  const secondHeader = 'statistiikka'
+  let total = good + neutral + bad
+  let average = (good - bad) / total
+  let positivesFraction = good / total * 100
+
+  const headerLabels =
+  {
+    firstHeader: 'anna palautetta',
+    secondHeader: 'statistiikka'
+  }
   const scoreLabels =
   {
     good: 'hyvä',
     neutral: 'neutraali',
-    bad: 'huono'
+    bad: 'huono',
+    total: 'yhteensä',
+    average: 'keskiarvo',
+    positivesFraction: 'positiivisia'
   }
 
   return (
     <div>
-      <Header name={firstHeader} />
+      <Header name={headerLabels.firstHeader} />
       <Button
         handleClick={() => setGood(good + 1)}
         text={scoreLabels.good} />
@@ -54,12 +73,15 @@ const App = () => {
       <Button
         handleClick={() => setBad(bad + 1)}
         text={scoreLabels.bad} />
-      <Header name={secondHeader} />
+      <Header name={headerLabels.secondHeader} />
       <Content
         labels={scoreLabels}
         goodScore={good}
         neutralScore={neutral}
-        badScore={bad} />
+        badScore={bad}
+        totalScore={total}
+        averageScore={average}
+        positivesFractionScore={positivesFraction} />
     </div>
   )
 }
