@@ -6,12 +6,16 @@ const Header = ({name}) => {
 }
 
 const Button = ({ handleClick, text }) => {
-    return <button onClick={handleClick}>
-      {text}</button>
+    return <button onClick={handleClick}>{text}</button>
   }
 
 const Statistic = (props) => {
-    return <p>{props.text} {props.value} {props.unit}</p>
+    return (
+    <tr>
+        <td>{props.text}</td>
+        <td>{props.value} {props.unit}</td> 
+    </tr>
+    )
 }
 
 const App = () => {
@@ -39,6 +43,8 @@ const App = () => {
         handleClick={() => setBad(bad + 1)}
         text='huono' />
     <Header name='statistiikka' />
+    <table>
+    <tbody>
     <Statistic text="hyvä" value ={good} />
     <Statistic text="neutraali" value ={neutral} />
     <Statistic text="huono" value ={bad} />
@@ -46,6 +52,8 @@ const App = () => {
     <Statistic text="keskiarvo" value ={average} />
     <Statistic text="positiivisia" value ={positivesFraction}
                 unit='%' />
+    </tbody>            
+    </table>
     </div>
     )
   }
