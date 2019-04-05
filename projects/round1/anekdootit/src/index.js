@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+const Header = ({name}) =>
+    <h1>{name}</h1>
+
 const Button = ({ handleClick, text }) => 
     <button onClick={handleClick}>{text}</button>
 
@@ -11,6 +14,9 @@ const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(new Array(anecdotesLength).fill(0))
 
+  const mostVotes = Math.max(...votes)
+  const mostVoted = votes.indexOf(mostVotes)
+
   const setRandomAnecdote = (anecdotesLength) => {
       let randomNumber = Math.floor(Math.random() * anecdotesLength)
       setSelected(randomNumber)
@@ -20,18 +26,22 @@ const App = (props) => {
     const votesCopy = [ ...votes ]
     votesCopy[selected] += 1
     setVotes(votesCopy)
-}
+  }
 
   return (
     <div>
-      {props.anecdotes[selected]}<br></br>
-      has {votes[selected]} votes<br></br>
-      <Button
+    <Header name='Anecdote of the day' />
+    {props.anecdotes[selected]}<br></br>
+    has {votes[selected]} votes<br></br>
+    <Button
         handleClick={() => voteSelectedAnecdote(votes, selected)}
         text='vote' />
-      <Button
+    <Button
         handleClick={() => setRandomAnecdote(anecdotesLength)}
         text='next anecdote' />
+    <Header name='Anecdote with most votes' />
+    {props.anecdotes[mostVoted]}<br></br>
+    has {mostVotes} votes<br></br>
     </div>
   )
 }
