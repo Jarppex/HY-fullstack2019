@@ -1,14 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-/*
-const Total = props => {
-  const total = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises
 
-  return <p>yhteensä {total} tehtävää</p>
+const Total = props => {
+    const exerciseTotal =
+        props.parts.reduce((exerciseSum, part) => exerciseSum + part.exercises, 0)
+    return <p>yhteensä {exerciseTotal} tehtävää</p>
 }
-//<Total parts={course.parts} />
-*/
 
 const Part = props =>
     <p>{props.part.name} {props.part.exercises}</p>
@@ -25,6 +23,7 @@ const Course = ({course}) => {
     <div>
         <Header course={course.name} />
         {parts()}
+        <Total parts={course.parts} />
     </div>
     )
 }
@@ -47,6 +46,11 @@ const App = () => {
             name: 'Komponenttien tila',
             exercises: 14,
             id: 3
+          },
+          {
+            name: 'Redux',
+            exercises: 7,
+            id: 4
           }
         ]
       }
