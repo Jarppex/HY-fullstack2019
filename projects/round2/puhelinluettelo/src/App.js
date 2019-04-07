@@ -11,11 +11,20 @@ const App = () => {
     setNewName(event.target.value)
   }
 
+  const sameElement = (element) => element.name === newName
+
   const addPerson = (event) => {
     event.preventDefault()
-    const personObject = { name: newName }
-    setPersons(persons.concat(personObject))
-    setNewName('')
+    if (persons.find(sameElement) === undefined)
+    {
+      const personObject = { name: newName }
+      setPersons(persons.concat(personObject))
+      setNewName('')
+    }
+    else
+    {
+      window.alert(`${newName} on jo luettelossa`)
+    }
   }
 
   const allPersons = () => persons.map( person =>
