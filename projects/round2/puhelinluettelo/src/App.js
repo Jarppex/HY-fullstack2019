@@ -1,28 +1,45 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+const App = () => {
+  const [ persons, setPersons] = useState([
+    { name: 'Arto Hellas' }
+  ]) 
+  const [ newName, setNewName ] = useState('')
+
+  const handleNameChange = (event) => {
+    console.log(event.target.value)
+    setNewName(event.target.value)
   }
+
+  const addPerson = (event) => {
+    event.preventDefault()
+    const personObject = { name: newName }
+    setPersons(persons.concat(personObject))
+    setNewName('')
+  }
+
+  const allPersons = () => persons.map( person =>
+        <p key={person.name}>{person.name}</p> )
+
+  return (
+    <div>
+      <h2>Puhelinluettelo</h2>
+      <form onSubmit={addPerson}>
+        <div>
+          nimi: <input
+          value={newName}
+          onChange={handleNameChange}
+          />
+        </div>
+        <div>
+          <button type="submit">lisää</button>
+        </div>
+      </form>
+      <h2>Numerot</h2>
+      {allPersons()}
+    </div>
+  )
+
 }
 
-export default App;
+export default App
