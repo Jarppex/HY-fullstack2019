@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import Persons from './components/Persons'
+import PersonForm from './components/PersonForm'
+import Filter from './components/Filter'
 
 
 const App = () => {
@@ -51,46 +54,18 @@ const App = () => {
     setNewNumber('')
   }
 
-  const matchFilter = (element) =>
-    element.name.toUpperCase().startsWith(limit.toUpperCase())
-
-  const showPersons = () => {
-    const personsToShow = persons.filter(matchFilter)
-    return (
-      personsToShow.map(person => <p key={person.name}>{person.name} {person.number}</p>)
-    )
-  }
-        
-
   return (
     <div>
       <h2>Puhelinluettelo</h2>
-      <div>
-        rajaa näytettäviä <input
-        value={limit}
-        onChange={handleLimitChange}
-        />
-      </div>
+      <Filter limit={limit} handleLimitChange={handleLimitChange} />
       <h3>lisää uusi</h3>
-      <form onSubmit={addPerson}>
-        <div>
-          nimi: <input
-          value={newName}
-          onChange={handleNameChange}
-          />
-        </div>
-        <div>
-          numero: <input
-          value={newNumber}
-          onChange={handleNumberChange}
-          />
-        </div>
-        <div>
-          <button type="submit">lisää</button>
-        </div>
-      </form>
+      <PersonForm
+        addPerson={addPerson}
+        newName={newName} handleNameChange={handleNameChange}
+        newNumber={newNumber} handleNumberChange={handleNumberChange} />
       <h3>Numerot</h3>
-      {showPersons()}
+      <Persons
+        persons={persons} limit={limit}/>
     </div>
   )
 }
