@@ -1,18 +1,23 @@
 import React from 'react'
 import CountryInfo from './CountryInfo'
+import Button from './Button'
 
-const Countries = ({countries, search}) => {
+const Countries = ({countries, search, setSearch}) => {
 
   const matchSearch = (element) =>
     element.name.toUpperCase().includes(search.toUpperCase())
+
+  const showCountryInfo = (country) =>
+    setSearch(country.name)
 
   const countriesToShow = countries.filter(matchSearch)
 
   if (countriesToShow.length === 1)
   {
     return (
-      countriesToShow.map(country =>
-        <CountryInfo key={country.name} country={country} />)
+      <CountryInfo
+        key={countriesToShow[0].name}
+        country={countriesToShow[0]} />
     )
   }
   else if (countriesToShow.length > 10)
@@ -25,7 +30,12 @@ const Countries = ({countries, search}) => {
   {
     return (
       countriesToShow.map(country =>
-        <p key={country.name}>{country.name}</p>)
+        <div key={country.name}>
+          {country.name}
+          <Button
+          handleClick={() => showCountryInfo(country)}
+          text='show' />
+        </div>)
     )
   }
 }

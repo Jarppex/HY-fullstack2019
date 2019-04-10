@@ -3,7 +3,6 @@ import axios from 'axios'
 import Countries from './components/Countries'
 import Filter from './components/Filter'
 
-
 const App = () => {
 
   const [ countries, setCountries ] = useState([])
@@ -22,7 +21,11 @@ const App = () => {
     <div>
       find countries
       <Filter search={search} handleSearchChange={handleSearchChange} />
-      <Countries countries={countries} search={search}/>
+      <Countries 
+        countries={countries}
+        search={search}
+        setSearch={setSearch}
+      />
     </div>
   )
 }
