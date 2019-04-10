@@ -1,28 +1,30 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Countries from './components/Countries'
+import Filter from './components/Filter'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+
+const App = () => {
+
+  const [ countries, setCountries ] = useState([])
+  const [ search, setSearch ] = useState('')
+
+  const handleSearchChange = (event) => setSearch(event.target.value)
+
+  useEffect(() => {
+    axios.get('https://restcountries.eu/rest/v2/all').then(response => {
+      setCountries(response.data)
+    })
+  }, [])
+
+  
+  return (
+    <div>
+      find countries
+      <Filter search={search} handleSearchChange={handleSearchChange} />
+      <Countries countries={countries} search={search}/>
+    </div>
+  )
 }
 
-export default App;
+export default App
