@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import numberService from './services/numbers'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 
-
 const App = () => {
 
   useEffect(() => {
-    axios.get('http://localhost:3001/persons').then(response => {
-      setPersons(response.data)
-    })
+    numberService.getAll().then(response => {setPersons(response.data)})
   }, [])
 
   const [persons, setPersons] = useState([])
@@ -31,11 +28,9 @@ const App = () => {
       if (persons.find(sameElement) === undefined)
       {
         const personObject = { name: newName, number: newNumber }
-        axios
-          .post('http://localhost:3001/persons', personObject)
-          .then(response => {
+        numberService.create(personObject).then(response => {
             console.log(response)
-          })
+        })
         setPersons(persons.concat(personObject))
       }
       else
