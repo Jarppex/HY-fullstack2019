@@ -13,12 +13,7 @@ const App = () => {
     })
   }, [])
 
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Martti Tienari', number: '040-123456' },
-    { name: 'Arto Järvinen', number: '040-123456' },
-    { name: 'Lea Kutvonen', number: '040-123456' }
-  ])
+  const [persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ limit, setLimit ] = useState('')
@@ -36,6 +31,11 @@ const App = () => {
       if (persons.find(sameElement) === undefined)
       {
         const personObject = { name: newName, number: newNumber }
+        axios
+          .post('http://localhost:3001/persons', personObject)
+          .then(response => {
+            console.log(response)
+          })
         setPersons(persons.concat(personObject))
       }
       else
