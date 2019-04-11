@@ -29,9 +29,9 @@ const App = () => {
       {
         const personObject = { name: newName, number: newNumber }
         numberService.create(personObject).then(response => {
-            console.log(response)
+            console.log('vastaus luomiseen', response)
+            setPersons(persons.concat(response.data))
         })
-        setPersons(persons.concat(personObject))
       }
       else
       {
@@ -67,7 +67,7 @@ const App = () => {
         newNumber={newNumber} handleNumberChange={handleNumberChange} />
       <h3>Numerot</h3>
       <Persons
-        persons={persons} limit={limit}/>
+        persons={persons} setPersons={setPersons} limit={limit}/>
     </div>
   )
 }
