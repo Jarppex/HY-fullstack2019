@@ -2,7 +2,7 @@ import React from 'react'
 import CountryInfo from './CountryInfo'
 import Button from './Button'
 
-const Countries = ({countries, search, setSearch}) => {
+const Countries = ({countries, search, setSearch, weather, setweather}) => {
 
   const matchSearch = (element) =>
     element.name.toUpperCase().includes(search.toUpperCase())
@@ -17,7 +17,10 @@ const Countries = ({countries, search, setSearch}) => {
     return (
       <CountryInfo
         key={countriesToShow[0].name}
-        country={countriesToShow[0]} />
+        country={countriesToShow[0]}
+        weather={weather}
+        setweather={setweather}
+        />
     )
   }
   else if (countriesToShow.length > 10)

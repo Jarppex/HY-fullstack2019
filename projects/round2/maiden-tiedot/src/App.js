@@ -6,6 +6,7 @@ import Filter from './components/Filter'
 const App = () => {
 
   const [ countries, setCountries ] = useState([])
+  const [ weather, setweather ] = useState({})
   const [ search, setSearch ] = useState('')
 
   const handleSearchChange = (event) => setSearch(event.target.value)
@@ -16,6 +17,11 @@ const App = () => {
     })
   }, [])
 
+  useEffect(() => {
+    axios.get(`http://api.apixu.com/v1/current.json?key=3cebc05bdce940d6a36123915191004&q=Helsinki`).then(response => {
+      setweather(response.data)
+    })
+  }, [])
   
   return (
     <div>
@@ -25,6 +31,8 @@ const App = () => {
         countries={countries}
         search={search}
         setSearch={setSearch}
+        weather={weather}
+        setweather={setweather}
       />
     </div>
   )
