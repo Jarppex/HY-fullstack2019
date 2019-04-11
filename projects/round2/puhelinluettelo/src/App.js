@@ -10,7 +10,7 @@ const App = () => {
     numberService.getAll().then(response => {setPersons(response.data)})
   }, [])
 
-  const [persons, setPersons] = useState([])
+  const [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ limit, setLimit ] = useState('')
@@ -19,13 +19,13 @@ const App = () => {
   const handleNumberChange = (event) => setNewNumber(event.target.value)
   const handleLimitChange = (event) => setLimit(event.target.value)
 
-  const sameElement = (element) => element.name === newName
+  const sameName = (element) => element.name === newName
 
   const addPerson = (event) => {
     event.preventDefault()
     if (newName !== '')
     {
-      if (persons.find(sameElement) === undefined)
+      if (persons.find(sameName) === undefined)
       {
         const personObject = { name: newName, number: newNumber }
         numberService.create(personObject).then(response => {
@@ -37,10 +37,29 @@ const App = () => {
       {
         if (newNumber !== '')
         {
-          const copyPersons = persons.map(element => element)
-          const samePerson = copyPersons.find(sameElement)
-          samePerson.number = newNumber
-          setPersons(copyPersons)
+          const personToChange = persons.find(sameName)
+          if (personToChange.number !== '')
+          {
+            const result = window.confirm(`${personToChange.name} on jo luettelossa, korvataanko vanha numero uudella?`)
+            if (result)
+            {
+              personToChange.number = newNumber
+              numberService.update(personToChange.id, personToChange).then(response => {
+                console.log('muutoksen vastaus', response)
+                setPersons(persons.map(element =>
+                  element.id !== personToChange.id ? element : response.data))
+              })
+            }
+          }
+          else
+          {
+            personToChange.number = newNumber
+            numberService.update(personToChange.id, personToChange).then(response => {
+              console.log('muutoksen vastaus', response)
+              setPersons(persons.map(element =>
+                element.id !== personToChange.id ? element : response.data))
+            })
+          }
         }
         else
         {
