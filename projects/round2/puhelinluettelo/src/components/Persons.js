@@ -1,21 +1,12 @@
 import React from 'react'
-import numberService from '../services/numbers'
 import Person from './Person'
 import Button from './Button'
 
-const Persons = ({persons, setPersons, limit}) => {
+const Persons = ({persons, limit, callServer}) => {
 
-  const deleteNumber = (persons, setPersons, person) => {
+  const deleteNumber = (person) => {
     const result = window.confirm(`Poistetaanko ${person.name}?`)
-    if (result)
-    {
-        numberService.remove(person.id).then(response =>
-            console.log('vastaus poistoon', response))
-        const copyPersons = persons.filter(element =>
-            element.id !== person.id)
-        console.log('numerot poiston jälkeen', copyPersons)
-        setPersons(copyPersons)
-    }
+    if (result) { callServer('delete', person) }
   }
 
   const matchFilter = (element) =>
@@ -29,7 +20,7 @@ const Persons = ({persons, setPersons, limit}) => {
         <div key={person.name}>
         <Person key={person.name} person={person} />
         <Button
-        handleClick={() => deleteNumber(persons, setPersons, person)}
+        handleClick={() => deleteNumber(person)}
         text='poista'
         />
       </div>
