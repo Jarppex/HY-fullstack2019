@@ -10,10 +10,11 @@ const App = () => {
   useEffect( () => callServer('get'), [] )
 
   const [ persons, setPersons ] = useState([])
+  const [ message, setMessage ] = useState('')
+  const [ messageColor, setMessageColor ] = useState('')
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ limit, setLimit ] = useState('')
-  const [ message, setMessage ] = useState('')
 
   const handleNameChange = (event) => setNewName(event.target.value)
   const handleNumberChange = (event) => setNewNumber(event.target.value)
@@ -25,18 +26,27 @@ const App = () => {
     if (message === 'get')
     {
       setMessage(`Numerot ladattin onnistuneesti`)
+      setMessageColor('green')
     }
     if (message === 'post')
     {
       setMessage(`Lisättiin ${newName}`)
+      setMessageColor('green')
     }
     if (message === 'put')
     {
       setMessage(`Muokattiin henkilöä ${newName}`)
+      setMessageColor('green')
     }
     if (message === 'delete')
     {
       setMessage(`Poistettiin ${person.name}`)
+      setMessageColor('green')
+    }
+    if (message === 'error')
+    {
+      setMessage(`Henkilö ${newName} on jo poistettu`)
+      setMessageColor('red')
     }
     setTimeout(() => {
       setMessage(null)
@@ -46,7 +56,8 @@ const App = () => {
   const callServer = (method, person) => {
     if (method === 'get')
     {
-      numberService.getAll().then(response => {
+      numberService.getAll()
+      .then(response => {
         showMessage('get')
         setPersons(response.data)
       })
@@ -54,7 +65,8 @@ const App = () => {
     if (method === 'post')
     {
       const personObject = { name: newName, number: newNumber }
-      numberService.create(personObject).then(response => {
+      numberService.create(personObject)
+      .then(response => {
         showMessage('post')
         setPersons(persons.concat(response.data))
       })
@@ -63,15 +75,22 @@ const App = () => {
     {
       const personToChange = persons.find(sameName)
       personToChange.number = newNumber
-      numberService.update(personToChange.id, personToChange).then(response => {
+      numberService.update(personToChange.id, personToChange)
+      .then(response => {
         showMessage('put')
         setPersons(persons.map(element =>
           element.id !== personToChange.id ? element : response.data))
       })
+      .catch(() => {
+        showMessage('error')
+        setPersons(persons.filter(element =>
+          element.id !== personToChange.id))
+      })
     }
     if (method === 'delete')
     {
-      numberService.remove(person.id).then(() => {
+      numberService.remove(person.id)
+      .then(() => {
         showMessage('delete', person)
         setPersons(persons.filter(element =>
           element.id !== person.id))
@@ -122,7 +141,7 @@ const App = () => {
   return (
     <div>
       <h2>Puhelinluettelo</h2>
-      <Notification message={message} />
+      <Notification message={message} color={messageColor} />
       <Filter limit={limit} handleLimitChange={handleLimitChange} />
       <h3>lisää uusi</h3>
       <PersonForm
