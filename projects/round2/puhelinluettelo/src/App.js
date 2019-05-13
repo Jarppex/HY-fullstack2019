@@ -33,6 +33,11 @@ const App = () => {
       setMessage(`Lisättiin ${newName}`)
       setMessageColor('green')
     }
+    if (message === 'postError')
+    {
+      setMessage(person.response.data.error)
+      setMessageColor('red')
+    }
     if (message === 'put')
     {
       setMessage(`Muokattiin henkilöä ${newName}`)
@@ -50,7 +55,7 @@ const App = () => {
     }
     setTimeout(() => {
       setMessage(null)
-    }, 3000)
+    }, 5000)
   }
 
   const callServer = (method, person) => {
@@ -69,6 +74,9 @@ const App = () => {
       .then(response => {
         showMessage('post')
         setPersons(persons.concat(response.data))
+      })
+      .catch(error => {
+        showMessage('postError', error)
       })
     }
     if (method === 'put')
