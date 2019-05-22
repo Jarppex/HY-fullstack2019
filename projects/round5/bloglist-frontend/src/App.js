@@ -17,7 +17,7 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('logging in with', username, password)
+    console.log('logging in with:', username, password)
     try {
       const user = await loginService.login({
         username, password,
@@ -26,7 +26,29 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      console.log('käyttäjätunnus tai salasana virheellinen')
+      console.log('wrong username or password')
+      /*
+      setErrorMessage('käyttäjätunnus tai salasana virheellinen')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+      */
+    }
+  }
+
+  const handleLogout = async (event) => {
+    //event.preventDefault()
+    console.log('logging out with:', username, password)
+    try {
+      /*
+      const user = await loginService.login({
+        username, password,
+      })*/
+      setUser(null)
+      //setUsername('')
+      //setPassword('')
+    } catch (exception) {
+      console.log('logging out failed')
       /*
       setErrorMessage('käyttäjätunnus tai salasana virheellinen')
       setTimeout(() => {
@@ -68,6 +90,7 @@ const App = () => {
   return (
     <div>
       <p>{user.name} logged in</p>
+      <button onClick={handleLogout}>Logout</button>
       <h2>blogs</h2>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
