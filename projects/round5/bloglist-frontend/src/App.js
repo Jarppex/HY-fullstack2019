@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 //import BlogcreationForm from './components/BlogcreationForm'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -12,90 +13,71 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('') 
   const [url, setUrl] = useState('')
+  const [message, setMessage ] = useState('')
+  const [messageColor, setMessageColor ] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
-  const handleLogin = async (event) => {
+  const showMessage = (message, color) => {
+    console.log(message)
+    setMessage(message)
+    setMessageColor(color)
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+  }
+
+  const handleLogIn = async (event) => {
     event.preventDefault()
-    console.log('logging in with:', username, password)
+    console.log('logging in..')
     try {
       const user = await loginService.login({
         username, password,
       })
       setUser(user)
-      //console.log(user)
-      console.log(user.name, 'logged in')
-      //console.log('token:', user.token)
       setUsername('')
       setPassword('')
+      showMessage('logged in successfully!', 'green')
     } catch (exception) {
-      console.log('wrong username or password!')
-      /*
-      setErrorMessage('käyttäjätunnus tai salasana virheellinen')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-      */
+      showMessage('wrong username or password!', 'red')
     }
   }
 
-  const handleLogout = async (event) => {
-    //event.preventDefault()
-    console.log('logging out with:', username, password)
+  const handleLogOut = async (event) => {
+    console.log('logging out..')
     try {
-      /*
-      const user = await loginService.login({
-        username, password,
-      })*/
       setUser(null)
-      //setUsername('')
-      //setPassword('')
+      showMessage('logged out succesfully!', 'green')
     } catch (exception) {
-      console.log('logging out failed!')
-      /*
-      setErrorMessage('käyttäjätunnus tai salasana virheellinen')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-      */
+      showMessage('logging out failed!', 'red')
     }
   }
 
   const handleBlogCreation = async (event) => {
     event.preventDefault()
-    console.log('creating blog..', title, author, url)
+    console.log('creating blog..')
     try {
-
-      //const user = user.id
-      //const userData = user
       const blog = await blogService.create({
         title, author, url, user: user.id, token: user.token
       })
-      console.log('blog creation successfull!', blog)
       const newBlogs = blogs.concat(blog)
       setBlogs(newBlogs)
       setTitle('')
       setAuthor('')
       setUrl('')
+      showMessage('blog created successfully!', 'green')
     } catch (exception) {
-      console.log('blog creation failed!')
-      /*
-      setErrorMessage('käyttäjätunnus tai salasana virheellinen')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-      */
+      showMessage('blog creation failed!', 'red')
     }
   }
 
   const loginForm = () => (
     <div>
-      <h2>Log in to application</h2>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogIn}>
       <div>
         käyttäjätunnus
           <input
@@ -158,6 +140,8 @@ const App = () => {
   if (user === null) {
     return (
       <div>
+        <h2>Log in to application</h2>
+        <Notification message={message} color={messageColor} />
         {loginForm()}
       </div>
     )
@@ -166,8 +150,9 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <Notification message={message} color={messageColor} />
       <p>{user.name} logged in</p>
-      <button onClick={handleLogout}>Logout</button>
+      <button onClick={handleLogOut}>Logout</button>
       {blogForm()}
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
