@@ -19,10 +19,13 @@ const App = () => {
   const [messageColor, setMessageColor ] = useState('')
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )
+    blogService.getAll().then(blogs => {
+      //console.log(blogs)
+      setBlogs(blogs)
+    })
   }, [])
+
+  //const blogRef = React.createRef()
 
   const showMessage = (message, color) => {
     console.log(message)
@@ -77,14 +80,14 @@ const App = () => {
     }
   }
 
+  
+
   if (user === null) {
     return (
       <div>
         <h2>Log in to application</h2>
         <Notification message={message} color={messageColor} />
-        <LoginForm
-          username={username}
-          password={password}
+        <LoginForm username={username} password={password}
           handleUsernameChange={({ target }) => setUsername(target.value)}
           handlePasswordChange={({ target }) => setPassword(target.value)}
           handleSubmit={handleLogIn}
@@ -100,18 +103,21 @@ const App = () => {
       <p>{user.name} logged in</p>
       <button onClick={handleLogOut}>Logout</button>
       <Togglable buttonLabel='create new blog'>
-        <BlogcreationForm
-          title={title}
-          author={author}
-          url={url}
+        <BlogcreationForm title={title} author={author} url={url}
           handleTitleChange={({ target }) => setTitle(target.value)}
           handleAuthorChange={({ target }) => setAuthor(target.value)}
           handleUrlChange={({ target }) => setUrl(target.value)}
           handleSubmit={handleBlogCreation}
         />
       </Togglable>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+      {blogs.map(blog => {
+        const blogRef = React.createRef()
+        return (
+          <Blog key={blog.id} blog={blog}
+          handleBlogClick={() => blogRef.current.toggleVisibility()}
+          ref={blogRef}
+        />
+        )}
       )}
     </div>
   )
