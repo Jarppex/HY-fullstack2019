@@ -4,17 +4,22 @@ const baseUrl = '/api/blogs'
 const getAll = async () => {
   const request = axios.get(baseUrl)
   const response = await request;
-  //console.log(response)
+  console.log('getAll response:', response)
   return response.data;
 }
 
 const create = async (blog) => {
-  //console.log('Lähetettävän blogin tiedot:', blog)
-  //console.log('Lähetettävä tokeni:', blog.token)
   const request = axios.post(baseUrl, blog)
   const response = await request;
-  //console.log(response)
+  //console.log('create response:', response)
   return response.data;
 }
 
-export default { getAll, create }
+const update = async (id, blog) => {
+  const request = axios.put(`${baseUrl}/${id}`, blog)
+  const response = await request;
+  console.log('update response:', response)
+  return response.data;
+}
+
+export default { getAll, create, update }

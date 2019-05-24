@@ -1,6 +1,8 @@
 import React, {useState, useImperativeHandle} from 'react'
+import Button from './Button'
 
-const Blog =  React.forwardRef(({ blog, handleBlogClick }, ref) =>  {
+const Blog =  React.forwardRef(
+  ({ blog, handleBlogClick, handleBlogUpdate }, ref) => {
   const [showFull, setShowFull] = useState(false)
 
   const toggleVisibility = () => {
@@ -12,6 +14,17 @@ const Blog =  React.forwardRef(({ blog, handleBlogClick }, ref) =>  {
       toggleVisibility
     }
   })
+
+  const handleBlogLike = () => {
+    const BlogToUpdate = blog
+    console.log('BlogToUpdate before:', BlogToUpdate)
+    if (!BlogToUpdate.likes) {
+      BlogToUpdate.likes = 0
+    }
+    BlogToUpdate.likes += 1
+    console.log('BlogToUpdate after like:', BlogToUpdate)
+    handleBlogUpdate(BlogToUpdate)
+  }
 
   const blogStyle = {
     paddingTop: 10,
@@ -27,7 +40,11 @@ const Blog =  React.forwardRef(({ blog, handleBlogClick }, ref) =>  {
         <div onClick={handleBlogClick}>
           <div>'{blog.title}' by {blog.author}</div>
           <div>{blog.url}</div>
-          <div>{blog.likes} likes</div>
+          <div>{blog.likes} likes 
+          <Button text='like'
+           handleClick={() => handleBlogLike(blog)}
+          />
+          </div>
           <div>added by {blog.user.name}</div>
         </div>
       </div>

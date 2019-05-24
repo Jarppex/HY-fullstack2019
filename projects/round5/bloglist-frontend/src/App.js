@@ -20,12 +20,10 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then(blogs => {
-      //console.log(blogs)
+      console.log(blogs)
       setBlogs(blogs)
     })
   }, [])
-
-  //const blogRef = React.createRef()
 
   const showMessage = (message, color) => {
     console.log(message)
@@ -80,7 +78,26 @@ const App = () => {
     }
   }
 
-  
+  const handleBlogUpdate = async (blog) => { //KESKEN
+    console.log('updating blog..')
+    try {
+      const updatedBlog = await blogService.update(blog.id, {
+        title: blog.title, author: blog.author, url: blog.url,
+        likes: blog.likes, user: blog.user.id
+      })
+      // muuta 'updatedBlog' user samaan muotoon kuin aiemmin
+      // ehkä lataa tiedot uudestaan serveriltä..?
+      // katso myös blogrouterin.put läpi
+      setBlogs(blogs.map(blog => {
+        return (
+          blog.id === updatedBlog.id ? updatedBlog : blog
+        )
+      }))
+      showMessage('blog updated successfully!', 'green')
+    } catch (exception) {
+      showMessage('blog update failed!', 'red')
+    }
+  }
 
   if (user === null) {
     return (
@@ -115,6 +132,7 @@ const App = () => {
         return (
           <Blog key={blog.id} blog={blog}
           handleBlogClick={() => blogRef.current.toggleVisibility()}
+          handleBlogUpdate={handleBlogUpdate}
           ref={blogRef}
         />
         )}
