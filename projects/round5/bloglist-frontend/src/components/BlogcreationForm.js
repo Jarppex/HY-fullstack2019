@@ -1,20 +1,26 @@
-import React, { useState } from 'react' //KESKEN
+import React from 'react'
 
-const BlogcreationForm = ({ handleBlogCreation }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('') 
-  const [url, setUrl] = useState('')
+const BlogcreationForm = ({
+  handleSubmit,
+  handleTitleChange,
+  handleAuthorChange,
+  handleUrlChange,
+  title,
+  author,
+  url
+  }) => {
 
-  return (
+  const blogForm = () => (
     <div>
-      <form onSubmit={handleBlogCreation}>
+      <h2>create new</h2>
+      <form onSubmit={handleSubmit}>
       <div>
         title
           <input
           type="text"
           value={title}
           name="title"
-          onChange={({ target }) => setTitle(target.value)}
+          onChange={handleTitleChange}
         />
       </div>
       <div>
@@ -23,7 +29,7 @@ const BlogcreationForm = ({ handleBlogCreation }) => {
           type="text"
           value={author}
           name="author"
-          onChange={({ target }) => setAuthor(target.value)}
+          onChange={handleAuthorChange}
         />
       </div>
       <div>
@@ -32,11 +38,17 @@ const BlogcreationForm = ({ handleBlogCreation }) => {
           type="text"
           value={url}
           name="url"
-          onChange={({ target }) => setUrl(target.value)}
+          onChange={handleUrlChange}
         />
       </div>
       <button type="submit">create</button>
       </form>
+    </div>
+  )
+
+  return (
+    <div>
+      {blogForm()}
     </div>
   )
 }
