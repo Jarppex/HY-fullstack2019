@@ -8,6 +8,13 @@ const getAll = async () => {
   return response.data;
 }
 
+const getOne = async (id) => {
+  const request = axios.get(`${baseUrl}/${id}`)
+  const response = await request;
+  console.log('getOne response:', response)
+  return response.data;
+}
+
 const create = async (blog) => {
   const request = axios.post(baseUrl, blog)
   const response = await request;
@@ -22,4 +29,4 @@ const update = async (id, blog) => {
   return response.data;
 }
 
-export default { getAll, create, update }
+export default { getAll, getOne, create, update }
