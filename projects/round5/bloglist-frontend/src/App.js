@@ -10,10 +10,10 @@ import loginService from './services/login'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [username, setUsername] = useState('') 
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('') 
+  const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const [message, setMessage ] = useState('')
   const [messageColor, setMessageColor ] = useState('')
@@ -51,7 +51,7 @@ const App = () => {
     }
   }
 
-  const handleLogOut = async (event) => {
+  const handleLogOut = async () => {
     console.log('logging out..')
     try {
       setUser(null)
@@ -138,9 +138,9 @@ const App = () => {
       {blogs.map(blog => {
         return (
           <Blog key={blog.id} blog={blog} user={user}
-          handleBlogUpdate={handleBlogUpdate}
-          handleBlogRemove={handleBlogRemove}
-        />
+            handleBlogUpdate={handleBlogUpdate}
+            handleBlogRemove={handleBlogRemove}
+          />
         )}
       )}
     </div>

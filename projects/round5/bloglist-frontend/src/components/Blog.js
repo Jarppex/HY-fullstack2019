@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Button from './Button'
 
-const Blog = ({ blog, user, handleBlogUpdate, handleBlogRemove }, ref) => {
+const Blog = ({ blog, user, handleBlogUpdate, handleBlogRemove }) => {
   const [showFull, setShowFull] = useState(false)
 
   const toggleVisibility = () => {
@@ -37,12 +37,12 @@ const Blog = ({ blog, user, handleBlogUpdate, handleBlogRemove }, ref) => {
     return (
       <div style={blogStyle}>
         <div onClick={toggleVisibility}>
-          <div>'{blog.title}' by {blog.author}</div>
+          <div>{blog.title} by {blog.author}</div>
           <div>{blog.url}</div>
-          <div>{blog.likes} likes 
-          <Button text='like'
-            handleClick={() => handleBlogLike(blog)}
-          />
+          <div>{blog.likes} likes
+            <Button text='like'
+              handleClick={() => handleBlogLike(blog)}
+            />
           </div>
           <div>added by {blog.user.name}</div>
           {user.name === blog.user.name && showRemoveButton()}
@@ -53,7 +53,7 @@ const Blog = ({ blog, user, handleBlogUpdate, handleBlogRemove }, ref) => {
   return (
     <div style={blogStyle}>
       <div onClick={toggleVisibility}>
-        '{blog.title}' by {blog.author}
+        {blog.title} by {blog.author}
       </div>
     </div>
   )
