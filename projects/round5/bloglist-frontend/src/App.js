@@ -136,13 +136,10 @@ const App = () => {
         />
       </Togglable>
       {blogs.map(blog => {
-        //const blogRef = React.createRef()
         return (
-          <Blog key={blog.id} blog={blog}
-          //handleBlogClick={() => blogRef.current.toggleVisibility()}
+          <Blog key={blog.id} blog={blog} user={user}
           handleBlogUpdate={handleBlogUpdate}
           handleBlogRemove={handleBlogRemove}
-          //ref={blogRef}
         />
         )}
       )}
