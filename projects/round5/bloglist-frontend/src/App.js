@@ -92,6 +92,21 @@ const App = () => {
     }
   }
 
+  const handleBlogRemove = async (blog) => {
+    console.log('removing blog..')
+    try {
+      const message = `Are you sure you want to remove ${blog.title} by ${blog.author}?`
+      const result = window.confirm(message)
+      if (result) {
+        await blogService.remove(blog.id)
+        renderBlogs()
+        showMessage('blog remove successfully!', 'green')
+      }
+    } catch (exception) {
+      showMessage('blog remove failed!', 'red')
+    }
+  }
+
   if (user === null) {
     return (
       <div>
@@ -121,12 +136,13 @@ const App = () => {
         />
       </Togglable>
       {blogs.map(blog => {
-        const blogRef = React.createRef()
+        //const blogRef = React.createRef()
         return (
           <Blog key={blog.id} blog={blog}
-          handleBlogClick={() => blogRef.current.toggleVisibility()}
+          //handleBlogClick={() => blogRef.current.toggleVisibility()}
           handleBlogUpdate={handleBlogUpdate}
-          ref={blogRef}
+          handleBlogRemove={handleBlogRemove}
+          //ref={blogRef}
         />
         )}
       )}

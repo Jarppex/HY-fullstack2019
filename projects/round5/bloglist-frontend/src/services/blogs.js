@@ -18,7 +18,7 @@ const getOne = async (id) => {
 const create = async (blog) => {
   const request = axios.post(baseUrl, blog)
   const response = await request;
-  //console.log('create response:', response)
+  console.log('create response:', response)
   return response.data;
 }
 
@@ -29,4 +29,11 @@ const update = async (id, blog) => {
   return response.data;
 }
 
-export default { getAll, getOne, create, update }
+const remove = async (id) => {
+  const request = axios.delete(`${baseUrl}/${id}`)
+  const response = await request;
+  console.log('remove response:', response)
+  return response.data;
+}
+
+export default { getAll, getOne, create, update, remove }
