@@ -9,7 +9,7 @@ const LoginForm = ({
 }) => {
 
   const loginForm = () => (
-    <div>
+    <div className='loginForm'>
       <form onSubmit={handleSubmit}>
         <div>
         käyttäjätunnus

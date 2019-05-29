@@ -35,7 +35,7 @@ const Blog = ({ blog, user, handleBlogUpdate, handleBlogRemove }) => {
 
   if (showFull) {
     return (
-      <div style={blogStyle}>
+      <div className='blog' style={blogStyle}>
         <div className='maxInfo' onClick={toggleVisibility}>
           <div>{blog.title} by {blog.author}</div>
           <div>{blog.url}</div>
@@ -51,7 +51,7 @@ const Blog = ({ blog, user, handleBlogUpdate, handleBlogRemove }) => {
     )
   }
   return (
-    <div style={blogStyle}>
+    <div className='blog' style={blogStyle}>
       <div className='minInfo' onClick={toggleVisibility}>
         {blog.title} by {blog.author}
       </div>
