@@ -18,7 +18,19 @@ const App = () => {
   const [message, setMessage ] = useState('')
   const [messageColor, setMessageColor ] = useState('')
 
-  useEffect(() => {renderBlogs()}, [])
+  useEffect(() => {
+    loginWithLocalStorage()
+    renderBlogs()
+  }, [])
+
+  const loginWithLocalStorage = () => {
+    const userString = localStorage.getItem('lastLoggedUser')
+    const user = JSON.parse(userString)
+    if (user) {
+      setUser(user)
+      showMessage('logged in successfully!', 'green')
+    }
+  }
 
   const renderBlogs = async () => {
     const newBlogs = await blogService.getAll()
@@ -42,6 +54,7 @@ const App = () => {
       const user = await loginService.login({
         username, password,
       })
+      localStorage.setItem('lastLoggedUser', JSON.stringify(user))
       setUser(user)
       setUsername('')
       setPassword('')
@@ -54,6 +67,7 @@ const App = () => {
   const handleLogOut = async () => {
     console.log('logging out..')
     try {
+      localStorage.removeItem('lastLoggedUser')
       setUser(null)
       showMessage('logged out succesfully!', 'green')
     } catch (exception) {
