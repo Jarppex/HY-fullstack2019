@@ -1,12 +1,15 @@
 import React from 'react'
+//import  { useField } from './hooks'
 
 const LoginForm = ({
   handleSubmit,
-  handleUsernameChange,
-  handlePasswordChange,
+  //handleUsernameChange,
+  //handlePasswordChange,
   username,
   password
 }) => {
+  //const username = useField('text')
+  //const password = useField('password')
 
   const loginForm = () => (
     <div className='loginForm'>
@@ -14,19 +17,19 @@ const LoginForm = ({
         <div>
         käyttäjätunnus
           <input
-            type="text"
-            value={username}
             name="Username"
-            onChange={handleUsernameChange}
+            type={username.type}
+            value={username.value}
+            onChange={username.onChange}
           />
         </div>
         <div>
         salasana
           <input
-            type="password"
-            value={password}
             name="Password"
-            onChange={handlePasswordChange}
+            type={password.type}
+            value={password.value}
+            onChange={password.onChange}
           />
         </div>
         <button type="submit">kirjaudu</button>

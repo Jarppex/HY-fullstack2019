@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import  { useField } from './hooks'
 import Blog from './components/Blog'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
@@ -10,13 +11,16 @@ import loginService from './services/login'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  //const [username, setUsername] = useState('')
+  //const [password, setPassword] = useState('')
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const [message, setMessage ] = useState('')
   const [messageColor, setMessageColor ] = useState('')
+
+  const username = useField('text')
+  const password = useField('password')
 
   useEffect(() => {
     loginWithLocalStorage()
@@ -51,13 +55,15 @@ const App = () => {
     event.preventDefault()
     console.log('logging in..')
     try {
+      //const username = username.value
+      //const password = password.value
       const user = await loginService.login({
-        username, password,
+        username: username.value, password: password.value
       })
       localStorage.setItem('lastLoggedUser', JSON.stringify(user))
       setUser(user)
-      setUsername('')
-      setPassword('')
+      //setUsername('')
+      //setPassword('')
       showMessage('logged in successfully!', 'green')
     } catch (exception) {
       showMessage('wrong username or password!', 'red')
@@ -127,8 +133,8 @@ const App = () => {
         <h2>Log in to application</h2>
         <Notification message={message} color={messageColor} />
         <LoginForm username={username} password={password}
-          handleUsernameChange={({ target }) => setUsername(target.value)}
-          handlePasswordChange={({ target }) => setPassword(target.value)}
+          /*handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}*/
           handleSubmit={handleLogIn}
         />
       </div>
