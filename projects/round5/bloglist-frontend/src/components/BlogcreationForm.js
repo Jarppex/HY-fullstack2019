@@ -2,9 +2,9 @@ import React from 'react'
 
 const BlogcreationForm = ({
   handleSubmit,
-  handleTitleChange,
+  /*handleTitleChange,
   handleAuthorChange,
-  handleUrlChange,
+  handleUrlChange,*/
   title,
   author,
   url
@@ -16,29 +16,32 @@ const BlogcreationForm = ({
       <form onSubmit={handleSubmit}>
         <div>
         title
-          <input
-            type="text"
-            value={title}
-            name="title"
-            onChange={handleTitleChange}
+          <input {...title}
+            reset=""
+            /*name="title"
+            type={title.type}
+            value={title.value}
+            onChange={title.onChange}*/
           />
         </div>
         <div>
         author
-          <input
-            type="text"
-            value={author}
-            name="author"
-            onChange={handleAuthorChange}
+          <input {...author}
+            reset=""
+            /*name="title"
+            type={author.type}
+            value={author.value}
+            onChange={author.onChange}*/
           />
         </div>
         <div>
         url
-          <input
-            type="text"
-            value={url}
-            name="url"
-            onChange={handleUrlChange}
+          <input {...url}
+            reset=""
+            /*name="title"
+            type={url.type}
+            value={url.value}
+            onChange={url.onChange}*/
           />
         </div>
         <button type="submit">create</button>

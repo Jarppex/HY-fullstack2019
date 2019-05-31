@@ -11,16 +11,23 @@ import loginService from './services/login'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  //const [username, setUsername] = useState('')
-  //const [password, setPassword] = useState('')
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+
   const [message, setMessage ] = useState('')
   const [messageColor, setMessageColor ] = useState('')
 
   const username = useField('text')
   const password = useField('password')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
+
+  const resetFields = () => {
+    username.reset()
+    password.reset()
+    title.reset()
+    author.reset()
+    url.reset()
+  }
 
   useEffect(() => {
     loginWithLocalStorage()
@@ -55,15 +62,12 @@ const App = () => {
     event.preventDefault()
     console.log('logging in..')
     try {
-      //const username = username.value
-      //const password = password.value
       const user = await loginService.login({
         username: username.value, password: password.value
       })
       localStorage.setItem('lastLoggedUser', JSON.stringify(user))
       setUser(user)
-      //setUsername('')
-      //setPassword('')
+      resetFields()
       showMessage('logged in successfully!', 'green')
     } catch (exception) {
       showMessage('wrong username or password!', 'red')
@@ -86,12 +90,11 @@ const App = () => {
     console.log('creating blog..')
     try {
       await blogService.create({
-        title, author, url, user: user.id, token: user.token
+        title: title.value, author: author.value, url: url.value,
+        user: user.id, token: user.token
       })
       renderBlogs()
-      setTitle('')
-      setAuthor('')
-      setUrl('')
+      resetFields()
       showMessage('blog created successfully!', 'green')
     } catch (exception) {
       showMessage('blog creation failed!', 'red')
@@ -133,8 +136,6 @@ const App = () => {
         <h2>Log in to application</h2>
         <Notification message={message} color={messageColor} />
         <LoginForm username={username} password={password}
-          /*handleUsernameChange={({ target }) => setUsername(target.value)}
-          handlePasswordChange={({ target }) => setPassword(target.value)}*/
           handleSubmit={handleLogIn}
         />
       </div>
@@ -149,9 +150,6 @@ const App = () => {
       <button onClick={handleLogOut}>Logout</button>
       <Togglable buttonLabel='create new blog'>
         <BlogcreationForm title={title} author={author} url={url}
-          handleTitleChange={({ target }) => setTitle(target.value)}
-          handleAuthorChange={({ target }) => setAuthor(target.value)}
-          handleUrlChange={({ target }) => setUrl(target.value)}
           handleSubmit={handleBlogCreation}
         />
       </Togglable>
