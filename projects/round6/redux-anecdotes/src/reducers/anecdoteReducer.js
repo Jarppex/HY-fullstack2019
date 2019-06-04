@@ -52,8 +52,6 @@ const reducer = (state = initialState, action) => {
           votes: anecdote.votes + 1
         } : anecdote
       })
-    case "Apple":
-      return state  
     default: return state
   }
 }
