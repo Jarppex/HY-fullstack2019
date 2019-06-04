@@ -6,6 +6,7 @@ import {
 const App = (props) => {
   const store = props.store
   const anecdotes = store.getState()
+  anecdotes.sort((first, second) => second.votes - first.votes)
   
   const vote = (id) => {
     console.log('vote', id)
