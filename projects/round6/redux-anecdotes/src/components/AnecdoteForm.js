@@ -1,15 +1,25 @@
 import React from 'react'
 import { createAnecdote } from '../reducers/anecdoteReducer'
+import { createAnecdoteNotification, resetNotification } from '../reducers/notificationReducer'
 
 const AnecdoteForm = ({store}) => {
 
     const addAnecdote = (event) => {
         event.preventDefault()
+        const anecdote = event.target.anecdote.value
+        event.target.anecdote.value = ''
         console.log('create new anecdote!')
         store.dispatch(
-        createAnecdote(event.target.anecdote.value)
+            createAnecdote(anecdote)
         )
-        event.target.anecdote.value = ''
+        store.dispatch(
+            createAnecdoteNotification(anecdote)
+        )
+        setTimeout(() => {
+            store.dispatch(
+                resetNotification()
+            )
+        }, 5000)
     }
 
     return (
