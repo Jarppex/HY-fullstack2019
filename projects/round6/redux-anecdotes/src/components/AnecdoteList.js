@@ -4,8 +4,14 @@ import { voteAnecdoteNotification, resetNotification } from '../reducers/notific
 
 const AnecdoteList = ({store}) => {
 
-    const anecdotes = store.getState().anecdotes
-    anecdotes.sort((first, second) => second.votes - first.votes)
+    const state = store.getState()
+
+    const byFilter = (anecdote) =>
+        anecdote.content.toUpperCase().includes(state.filter.toUpperCase())
+
+    const anecdotesToShow = state.anecdotes.filter(byFilter)
+
+    anecdotesToShow.sort((first, second) => second.votes - first.votes)
 
     const vote = (anecdote) => {
         console.log('vote', anecdote)
@@ -25,7 +31,7 @@ const AnecdoteList = ({store}) => {
     return (
         <div>
         <h2>Anecdotes</h2>
-        {anecdotes.map(anecdote =>
+        {anecdotesToShow.map(anecdote =>
             <div key={anecdote.id}>
             <div>
                 {anecdote.content}
