@@ -7,8 +7,8 @@ const AnecdoteList = (props) => {
 
     const vote = (anecdote) => {
         console.log('vote', anecdote)
-        props.voteAnecdote(anecdote.id)
-        props.voteAnecdoteNotification(anecdote.content)
+        props.voteAnecdote(anecdote)
+        props.voteAnecdoteNotification(anecdote)
         setTimeout(() => {
             props.resetNotification()
         }, 5000)

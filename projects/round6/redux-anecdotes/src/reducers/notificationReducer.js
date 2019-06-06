@@ -1,15 +1,15 @@
 
-  export const voteAnecdoteNotification = (content) => {
+  export const voteAnecdoteNotification = (anecdote) => {
     return {
       type: 'SET_NOTIFICATION',
-      notification: `You voted '${content}'`
+      notification: `You voted '${anecdote.content}'`
     }
   }
 
-  export const createAnecdoteNotification = (content) => {
+  export const createAnecdoteNotification = (anecdote) => {
     return {
       type: 'SET_NOTIFICATION',
-      notification: `'${content}' created`
+      notification: `'${anecdote.content}' created`
     }
   }
 

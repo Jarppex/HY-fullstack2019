@@ -1,3 +1,4 @@
+/*
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -7,9 +8,12 @@ const anecdotesAtStart = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
+const initialState = anecdotesAtStart.map(asObject)
+*/
+
 const getId = () => (100000 * Math.random()).toFixed(0)
 
-const asObject = (anecdote) => {
+export const asObject = (anecdote) => {
   return {
     content: anecdote,
     id: getId(),
@@ -17,12 +21,10 @@ const asObject = (anecdote) => {
   }
 }
 
-const initialState = anecdotesAtStart.map(asObject)
-
-export const voteAnecdote = (id) => {
+export const initializeAnecdotes = (anecdotes) => {
   return {
-    type: 'VOTE',
-    data: { id }
+    type: 'INIT_ANECDOTES',
+    data: anecdotes,
   }
 }
 
@@ -30,18 +32,27 @@ export const createAnecdote = (anecdote) => {
   return {
     type: 'CREATE_ANECDOTE',
     data: {
-      content: anecdote,
-      id: getId(),
-      votes: 0
+      content: anecdote.content,
+      id: anecdote.id,
+      votes: anecdote.votes
     }
   }
 }
 
-const reducer = (state = initialState, action) => {
+export const voteAnecdote = (anecdote) => {
+  return {
+    type: 'VOTE',
+    data: { id: anecdote.id }
+  }
+}
+
+const reducer = (state = [], action) => {
   console.log('state now: ', state)
   console.log('action', action)
 
   switch(action.type) {
+    case 'INIT_ANECDOTES':
+      return action.data
     case "CREATE_ANECDOTE":
       return state.concat(action.data)
     case "VOTE":
