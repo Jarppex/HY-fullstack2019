@@ -1,25 +1,22 @@
 
-  export const voteAnecdoteNotification = (anecdote) => {
-    return {
-      type: 'SET_NOTIFICATION',
-      notification: `You voted '${anecdote.content}'`
+export const setNotification = (message, duration) => {
+    return async dispatch => {
+      setTimeout(() => {
+        dispatch(resetNotification())
+      }, duration*1000)
+      dispatch({
+        type: 'SET_NOTIFICATION',
+        notification: message
+      })
     }
-  }
+}
 
-  export const createAnecdoteNotification = (anecdote) => {
-    return {
-      type: 'SET_NOTIFICATION',
-      notification: `'${anecdote.content}' created`
-    }
-  }
-
-  export const resetNotification = () => {
+export const resetNotification = () => {
     return { type: 'RESET' }
-  }
+}
 
-  const initialState = ''
-
-  const notificationReducer = (state = initialState, action) => {
+const initialState = ''
+const notificationReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_NOTIFICATION':
             return action.notification
@@ -28,6 +25,6 @@
         default:
             return state
     }
-  }
+}
   
-  export default notificationReducer
+export default notificationReducer
