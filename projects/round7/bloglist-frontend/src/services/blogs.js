@@ -8,8 +8,8 @@ const getAll = async () => {
   return response.data
 }
 
-const getOne = async (id) => {
-  const request = axios.get(`${baseUrl}/${id}`)
+const getOne = async (blog) => {
+  const request = axios.get(`${baseUrl}/${blog.id}`)
   const response = await request
   console.log('getOne response:', response)
   return response.data
@@ -22,15 +22,15 @@ const create = async (blog) => {
   return response.data
 }
 
-const update = async (id, blog) => {
-  const request = axios.put(`${baseUrl}/${id}`, blog)
+const update = async (blog) => {
+  const request = axios.put(`${baseUrl}/${blog.id}`, blog)
   const response = await request
   console.log('update response:', response)
   return response.data
 }
 
-const remove = async (id) => {
-  const request = axios.delete(`${baseUrl}/${id}`)
+const remove = async (blog) => {
+  const request = axios.delete(`${baseUrl}/${blog.id}`)
   const response = await request
   console.log('remove response:', response)
   return response.data
