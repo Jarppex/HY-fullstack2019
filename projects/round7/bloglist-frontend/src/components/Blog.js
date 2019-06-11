@@ -14,10 +14,10 @@ const Blog = (props) => {
   const blog = props.blog
   const user = props.user
 
-  const like = (blog) => {
+  const like = async (blog) => {
     console.log('updating blog..')
     try {
-      props.likeBlog({
+      await props.likeBlog({
         title: blog.title, author: blog.author, url: blog.url,
         likes: blog.likes, id: blog.id, user: blog.user.id
       })
@@ -33,8 +33,8 @@ const Blog = (props) => {
       const message = `Are you sure you want to remove ${blog.title} by ${blog.author}?`
       const result = window.confirm(message)
       if (result) {
-        props.removeBlog(blog)
-        props.setNotification('blog remove successfully!', 'green', 5)
+        await props.removeBlog(blog)
+        props.setNotification('blog removed successfully!', 'green', 5)
       }
     } catch (exception) {
       props.setNotification('blog remove failed!', 'red', 5)
@@ -83,6 +83,12 @@ const Blog = (props) => {
   )
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
 const mapDispatchToProps = {
   setNotification,
   likeBlog,
@@ -90,6 +96,6 @@ const mapDispatchToProps = {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Blog)

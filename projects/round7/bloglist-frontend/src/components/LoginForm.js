@@ -1,37 +1,43 @@
 import React from 'react'
-//import  { useField } from './hooks'
+import { connect } from 'react-redux'
+import { setNotification } from '../reducers/notificationReducer'
+import { login } from '../reducers/userReducer'
+import  { useField } from '../hooks'
 
-const LoginForm = ({
-  handleSubmit,
-  //handleUsernameChange,
-  //handlePasswordChange,
-  username,
-  password
-}) => {
-  //const username = useField('text')
-  //const password = useField('password')
+const LoginForm = (props) => {
+  const username = useField('text')
+  const password = useField('password')
+
+  const resetFields = () => {
+    username.reset()
+    password.reset()
+  }
+
+  const handleLogIn = async (event) => {
+    event.preventDefault()
+    console.log('logging in..')
+    try {
+      await props.login({ username: username.value, password: password.value })
+      resetFields()
+      props.setNotification('logged in successfully!', 'green', 5)
+    } catch (exception) {
+      props.setNotification('wrong username or password!', 'red', 5)
+    }
+  }
 
   const loginForm = () => (
     <div className='loginForm'>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogIn}>
         <div>
         käyttäjätunnus
           <input {...username}
             reset=""
-            /*name="Username"
-            type={username.type}
-            value={username.value}
-            onChange={username.onChange}*/
           />
         </div>
         <div>
         salasana
           <input {...password}
             reset=""
-            /*name="Password"
-            type={password.type}
-            value={password.value}
-            onChange={password.onChange}*/
           />
         </div>
         <button type="submit">kirjaudu</button>
@@ -46,4 +52,12 @@ const LoginForm = ({
   )
 }
 
-export default LoginForm
+const mapDispatchToProps = {
+  setNotification,
+  login
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(LoginForm)

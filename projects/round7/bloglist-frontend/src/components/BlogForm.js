@@ -19,8 +19,7 @@ const BlogcreationForm = (props) => {
     event.preventDefault()
     console.log('creating blog..')
     try {
-      console.log('USER:', props.user)
-      props.createBlog({
+      await props.createBlog({
         title: title.value, author: author.value, url: url.value,
         user: props.user.id, token: props.user.token
       })
@@ -65,12 +64,18 @@ const BlogcreationForm = (props) => {
   )
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
 const mapDispatchToProps = {
   setNotification,
   createBlog
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(BlogcreationForm)
