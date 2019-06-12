@@ -27,6 +27,7 @@ const LoginForm = (props) => {
 
   const loginForm = () => (
     <div className='loginForm'>
+      <h2>Log in to application</h2>
       <form onSubmit={handleLogIn}>
         <div>
         käyttäjätunnus
