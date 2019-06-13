@@ -15,8 +15,8 @@ const updateUsers = (users) => {
 }
 
 const reducer = (state = [], action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
+  //console.log('state now: ', state)
+  //console.log('action', action)
 
   switch(action.type) {
   case 'UPDATE_USERS':

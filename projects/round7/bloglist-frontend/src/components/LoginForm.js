@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setNotification } from '../reducers/notificationReducer'
 import { login } from '../reducers/userReducer'
-import  { useField } from '../hooks'
+import { setNotification } from '../reducers/notificationReducer'
+import { useField } from '../hooks'
 
 const LoginForm = (props) => {
   const username = useField('text')
@@ -41,7 +41,7 @@ const LoginForm = (props) => {
             reset=""
           />
         </div>
-        <button type="submit">kirjaudu</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   )

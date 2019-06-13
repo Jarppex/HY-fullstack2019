@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import {
-  BrowserRouter as Router, Route
+  BrowserRouter as Router, Route, Redirect
 } from 'react-router-dom'
 
 import { setNotification } from './reducers/notificationReducer'
@@ -10,6 +10,7 @@ import { getBlogs } from './reducers/blogReducer'
 import { getUsers } from './reducers/usersReducer'
 
 import Notification from './components/Notification'
+import Header from './components/Header'
 import LoginForm from './components/LoginForm'
 import BlogsView from './components/BlogsView'
 import BlogView from './components/BlogView'
@@ -24,16 +25,6 @@ const App = (props) => {
     props.getUsers()
   }, [])
 
-  const handleLogOut = async () => {
-    console.log('logging out..')
-    try {
-      await props.logout()
-      props.setNotification('logged out succesfully!', 'green', 5)
-    } catch (exception) {
-      props.setNotification('logging out failed!', 'red', 5)
-    }
-  }
-
   const findById = (array, id) => {
     return array.find(element => element.id === id)
   }
@@ -43,10 +34,11 @@ const App = (props) => {
       <div>
         <Router>
           <div>
+            <Header />
             <Notification />
-            <p>{props.user.name} logged in</p>
-            <button onClick={handleLogOut}>Logout</button>
-            <Route exact path="/" render={() => <BlogsView />} />
+            <Route exact path="/" render={() =>
+              <Redirect to="/blogs" />} />
+            <Route exact path="/blogs" render={() => <BlogsView />} />
             <Route exact path="/blogs/:id" render={({ match }) =>
               <BlogView blog={findById(props.blogs, match.params.id)} />} />
             <Route exact path="/users" render={() => <UsersView />} />

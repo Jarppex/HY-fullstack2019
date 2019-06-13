@@ -9,6 +9,7 @@ const UserView = (props) => {
   return (
     <div>
       <h2>{props.user.name}</h2>
+      <strong>added blogs</strong>
       <ul>
         {props.user.blogs.map(blog => {
           return (
