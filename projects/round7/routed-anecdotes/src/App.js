@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import {
   BrowserRouter as Router,
-  Route, Link, Redirect, withRouter
+  Route, Link, withRouter
 } from 'react-router-dom'
+import { Table, Form, Button, Alert, Nav, Navbar } from 'react-bootstrap'
 
 const Menu = () => {
   const padding = {
@@ -10,9 +11,22 @@ const Menu = () => {
   }
   return (
     <div>
-      <Link to='/' style={padding}>anecdotes</Link>
-      <Link to='/create' style={padding}>create new</Link>
-      <Link to='/info' style={padding}>about</Link>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="#" as="span">
+              <Link to='/' style={padding}>anecdotes</Link>
+            </Nav.Link>
+            <Nav.Link href="#" as="span">
+              <Link to='/create' style={padding}>create new</Link>
+            </Nav.Link>
+            <Nav.Link href="#" as="span">
+              <Link to='/info' style={padding}>about</Link>
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     </div>
   )
 }
@@ -21,12 +35,17 @@ const AnecdoteList = ({ anecdotes }) => {
   return (
   <div>
     <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote => 
-        <li key={anecdote.id} >
-          <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
-        </li>)}
-    </ul>
+    <Table striped>
+      <tbody>
+        {anecdotes.map(anecdote => 
+          <tr key={anecdote.id}>
+            <td>
+              <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </Table>
   </div>
   )
 }
@@ -62,6 +81,7 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
+  
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
@@ -73,8 +93,8 @@ const CreateNew = (props) => {
     setInfo('')
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = (event) => {
+    event.preventDefault()
     props.addNew({
       content,
       author,
@@ -85,27 +105,39 @@ const CreateNew = (props) => {
     props.showNotification(message)
     clearInputs()
     props.history.push('/')
-
   }
 
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
-        </div>
-        <div>
-          author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
-        </div>
-        <div>
-          url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
-        </div>
-        <button>create</button>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>content:</Form.Label>
+          <Form.Control
+            type="text"
+            name="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+          <Form.Label>author:</Form.Label>
+          <Form.Control
+            type="text"
+            name='author'
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+          />
+          <Form.Label>url for more info:</Form.Label>
+          <Form.Control
+            type="text"
+            name='info'
+            value={info}
+            onChange={(e)=> setInfo(e.target.value)}
+          />
+          <Button variant="primary" type="submit">
+            create
+          </Button>
+        </Form.Group>
+      </Form>
     </div>
   )
 }
@@ -127,6 +159,13 @@ const App = () => {
       info: 'http://wiki.c2.com/?PrematureOptimization',
       votes: 0,
       id: '2'
+    },
+    {
+      content: 'Laiffi is laiffii',
+      author: 'Matti Nykänen',
+      info: 'http://www.mattinykänen.fi',
+      votes: 0,
+      id: '3'
     }
   ])
 
@@ -159,12 +198,16 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Router>
         <div>
           <h1>Software anecdotes</h1>
           <Menu />
-          <div>{notification}</div>
+          {(notification &&
+            <Alert variant="success">
+              {notification}
+            </Alert>
+      )}
           <Route exact path="/" render={() => 
             <AnecdoteList anecdotes={anecdotes} />} />
           <Route path="/create" render={() => 
