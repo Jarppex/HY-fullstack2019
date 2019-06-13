@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Form, Button } from 'semantic-ui-react'
 import { login } from '../reducers/userReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { useField } from '../hooks'
@@ -26,23 +27,29 @@ const LoginForm = (props) => {
   }
 
   const loginForm = () => (
-    <div className='loginForm'>
+    <div>
       <h2>Log in to application</h2>
-      <form onSubmit={handleLogIn}>
-        <div>
-        käyttäjätunnus
-          <input {...username}
-            reset=""
+      <Form onSubmit={handleLogIn}>
+        <Form.Field>
+          <label>Username</label>
+          <input
+            placeholder='Username'
+            type={username.type}
+            value={username.value}
+            onChange={username.onChange}
           />
-        </div>
-        <div>
-        salasana
-          <input {...password}
-            reset=""
+        </Form.Field>
+        <Form.Field>
+          <label>Password</label>
+          <input
+            placeholder='Password'
+            type={password.type}
+            value={password.value}
+            onChange={password.onChange}
           />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+        </Form.Field>
+        <Button primary type='submit'>Login</Button>
+      </Form>
     </div>
   )
 

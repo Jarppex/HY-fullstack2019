@@ -73,7 +73,6 @@ const BlogView = (props) => {
         </div>
         <div>added by {blog.user.name}</div>
         {user.name === blog.user.name && showRemoveButton()}
-        <CommentForm blog={blog} />
         <h3>comments</h3>
         <ul>
           {blogComments.map(comment => {
@@ -82,6 +81,7 @@ const BlogView = (props) => {
             )
           })}
         </ul>
+        <CommentForm blog={blog} />
       </div>
     </div>
   )

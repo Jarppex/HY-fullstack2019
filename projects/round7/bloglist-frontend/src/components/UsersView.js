@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Header, Table } from 'semantic-ui-react'
 import { getUsers } from '../reducers/usersReducer'
 
 const UsersView = (props) => {
@@ -11,23 +12,35 @@ const UsersView = (props) => {
 
   return (
     <div>
-      <h2>Users</h2>
-      <table>
-        <tbody>
-          <tr>
-            <th></th>
-            <th><strong>blogs created</strong></th>
-          </tr>
+      <Table basic='very' celled collapsing>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Users</Table.HeaderCell>
+            <Table.HeaderCell>Blogs created</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
           {props.users.map(user => {
             return (
-              <tr key={user.id}>
-                <td><Link to={`/users/${user.id}`}>{user.name}</Link></td>
-                <td>{user.blogs.length}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+              <Table.Row key={user.id}>
+                <Table.Cell>
+                  <Header as='h4' image>
+                    <Header.Content>
+                      <Link to={`/users/${user.id}`}>{user.username}</Link>
+                      <Header.Subheader>
+                        {user.name}
+                      </Header.Subheader>
+                    </Header.Content>
+                  </Header>
+                </Table.Cell>
+                <Table.Cell>
+                  {user.blogs.length}
+                </Table.Cell>
+              </Table.Row>
+            )}
+          )}
+        </Table.Body>
+      </Table>
     </div>
   )
 }

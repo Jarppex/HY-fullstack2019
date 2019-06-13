@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Form, Button } from 'semantic-ui-react'
 import { setNotification } from '../reducers/notificationReducer'
 import { createComment } from '../reducers/commentReducer'
 import  { useField } from '../hooks'
@@ -22,15 +23,17 @@ const CommentForm = (props) => {
 
   const commentForm = () => (
     <div>
-      <h3>add comments</h3>
-      <form onSubmit={handleCommentCreation}>
-        <div>
-          <input {...comment}
-            reset=""
+      <Form onSubmit={handleCommentCreation}>
+        <Form.Field>
+          <input
+            placeholder='write a comment..'
+            type={comment.type}
+            value={comment.value}
+            onChange={comment.onChange}
           />
-        </div>
-        <button type="submit">add comment</button>
-      </form>
+        </Form.Field>
+        <Button type='submit'>Add comment</Button>
+      </Form>
     </div>
   )
 

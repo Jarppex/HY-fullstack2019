@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Table } from 'semantic-ui-react'
 
 import Togglable from './Togglable'
 import BlogForm from './BlogForm'
@@ -7,23 +8,24 @@ import Blog from './Blog'
 
 const BlogsView = (props) => {
 
-  const blogs = () => (
-    <div>
-      <h2>Blogs</h2>
-      <Togglable buttonLabel='create new blog'>
-        <BlogForm />
-      </Togglable>
-      {props.sortedBlogs.map(blog => {
-        return (
-          <Blog key={blog.id} blog={blog} />
-        )}
-      )}
-    </div>
-  )
-
   return (
     <div>
-      {blogs()}
+      <h3>Blogs</h3>
+      <Table striped celled>
+        <Table.Body>
+          {props.sortedBlogs.map(blog => {
+            return (
+              <Table.Row key={blog.id}>
+                <Table.Cell>
+                  <Blog key={blog.id} blog={blog} />
+                </Table.Cell>
+              </Table.Row>
+            )})}
+        </Table.Body>
+      </Table>
+      <Togglable buttonLabel='Create new blog'>
+        <BlogForm />
+      </Togglable>
     </div>
   )
 }

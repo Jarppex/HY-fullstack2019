@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {
   BrowserRouter as Router, Route, Redirect
 } from 'react-router-dom'
+import { Container } from 'semantic-ui-react'
 
 import { setNotification } from './reducers/notificationReducer'
 import { logout, loginWithLocalStorage } from './reducers/userReducer'
@@ -32,27 +33,31 @@ const App = (props) => {
   if (props.user) {
     return (
       <div>
-        <Router>
-          <div>
-            <Header />
-            <Notification />
-            <Route exact path="/" render={() =>
-              <Redirect to="/blogs" />} />
-            <Route exact path="/blogs" render={() => <BlogsView />} />
-            <Route exact path="/blogs/:id" render={({ match }) =>
-              <BlogView blog={findById(props.blogs, match.params.id)} />} />
-            <Route exact path="/users" render={() => <UsersView />} />
-            <Route exact path="/users/:id" render={({ match }) =>
-              <UserView user={findById(props.users, match.params.id)} />} />
-          </div>
-        </Router>
+        <Container>
+          <Router>
+            <div>
+              <Header />
+              <Notification />
+              <Route exact path="/" render={() =>
+                <Redirect to="/blogs" />} />
+              <Route exact path="/blogs" render={() => <BlogsView />} />
+              <Route exact path="/blogs/:id" render={({ match }) =>
+                <BlogView blog={findById(props.blogs, match.params.id)} />} />
+              <Route exact path="/users" render={() => <UsersView />} />
+              <Route exact path="/users/:id" render={({ match }) =>
+                <UserView user={findById(props.users, match.params.id)} />} />
+            </div>
+          </Router>
+        </Container>
       </div>
     )
   }
   return (
     <div>
-      <Notification />
-      <LoginForm />
+      <Container>
+        <Notification />
+        <LoginForm />
+      </Container>
     </div>
   )
 }

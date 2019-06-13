@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Form, Button } from 'semantic-ui-react'
 import { setNotification } from '../reducers/notificationReducer'
 import { createBlog } from '../reducers/blogReducer'
 import  { useField } from '../hooks'
@@ -32,28 +33,36 @@ const BlogcreationForm = (props) => {
 
   const blogForm = () => (
     <div>
-      <h2>create new</h2>
-      <form onSubmit={handleBlogCreation}>
-        <div>
-        title
-          <input {...title}
-            reset=""
+      <Form onSubmit={handleBlogCreation}>
+        <Form.Field required>
+          <label>Title</label>
+          <input
+            placeholder='Title'
+            type={title.type}
+            value={title.value}
+            onChange={title.onChange}
           />
-        </div>
-        <div>
-        author
-          <input {...author}
-            reset=""
+        </Form.Field>
+        <Form.Field>
+          <label>Author</label>
+          <input
+            placeholder='Author'
+            type={author.type}
+            value={author.value}
+            onChange={author.onChange}
           />
-        </div>
-        <div>
-        url
-          <input {...url}
-            reset=""
+        </Form.Field>
+        <Form.Field required>
+          <label>Url</label>
+          <input
+            placeholder='Url'
+            type={url.type}
+            value={url.value}
+            onChange={url.onChange}
           />
-        </div>
-        <button type="submit">create</button>
-      </form>
+        </Form.Field>
+        <Button type='submit'>Create</Button>
+      </Form>
     </div>
   )
 

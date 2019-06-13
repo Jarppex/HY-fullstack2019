@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Menu, Button } from 'semantic-ui-react'
 import { setNotification } from '../reducers/notificationReducer'
 import { logout } from '../reducers/userReducer'
 
@@ -17,17 +18,26 @@ const Header = (props) => {
   }
 
   const headerStyle = {
-    padding: 5,
-    marginBottom: 5,
-    backgroundColor: 'lightgrey',
+    marginBottom: 20,
+  }
+  const buttonStyle = {
+    marginLeft: 10,
   }
 
   return (
-    <div className='header' style={headerStyle}>
-      <Link to='/blogs'>blogs  </Link>
-      <Link to='/users'>users  </Link>
-      {props.user.name} logged in
-      <button onClick={handleLogOut}>Logout</button>
+    <div style={headerStyle}>
+      <Menu inverted>
+        <Menu.Item>
+          <Link to='/blogs'>Blogs</Link>
+        </Menu.Item>
+        <Menu.Item>
+          <Link to='/users'>Users</Link>
+        </Menu.Item>
+        <Menu.Item position='right'>
+          {props.user.name} logged in
+          <Button style={buttonStyle} onClick={handleLogOut}>Logout</Button>
+        </Menu.Item>
+      </Menu>
     </div>
   )
 }
