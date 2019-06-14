@@ -33,7 +33,7 @@ const Notification = (props) => {
     return (
       <div>
         {(message &&
-          <Message negative success style={notificationStyle}>
+          <Message negative style={notificationStyle}>
             {message}
           </Message>
         )}
@@ -44,7 +44,7 @@ const Notification = (props) => {
   return (
     <div>
       {(message &&
-        <Message success style={notificationStyle}>
+        <Message style={notificationStyle}>
           {message}
         </Message>
       )}

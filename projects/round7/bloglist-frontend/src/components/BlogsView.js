@@ -23,7 +23,7 @@ const BlogsView = (props) => {
             )})}
         </Table.Body>
       </Table>
-      <Togglable buttonLabel='Create new blog'>
+      <Togglable>
         <BlogForm />
       </Togglable>
     </div>

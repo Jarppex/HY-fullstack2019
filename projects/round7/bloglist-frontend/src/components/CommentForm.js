@@ -32,7 +32,7 @@ const CommentForm = (props) => {
             onChange={comment.onChange}
           />
         </Form.Field>
-        <Button type='submit'>Add comment</Button>
+        <Button primary size='tiny' type='submit'>Add comment</Button>
       </Form>
     </div>
   )

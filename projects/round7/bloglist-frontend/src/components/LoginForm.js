@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Form, Button } from 'semantic-ui-react'
+import { Form, Button, Segment } from 'semantic-ui-react'
 import { login } from '../reducers/userReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { useField } from '../hooks'
@@ -28,28 +28,24 @@ const LoginForm = (props) => {
 
   const loginForm = () => (
     <div>
-      <h2>Log in to application</h2>
-      <Form onSubmit={handleLogIn}>
-        <Form.Field>
-          <label>Username</label>
-          <input
-            placeholder='Username'
-            type={username.type}
-            value={username.value}
-            onChange={username.onChange}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Password</label>
-          <input
-            placeholder='Password'
-            type={password.type}
-            value={password.value}
-            onChange={password.onChange}
-          />
-        </Form.Field>
-        <Button primary type='submit'>Login</Button>
-      </Form>
+      <Segment placeholder style={{ marginTop: 20 }}>
+        <Form onSubmit={handleLogIn}>
+          <h2 style={{ textAlign: 'center' }}>Log in to application</h2>
+          <Form.Field>
+            <Form.Input
+              icon='user' iconPosition='left' label='Username' placeholder='Username'
+              type='text' value={username.value} onChange={username.onChange}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Form.Input
+              icon='lock' iconPosition='left' label='Password' placeholder='Password'
+              type='password' value={password.value} onChange={password.onChange}
+            />
+          </Form.Field>
+          <Button primary type='submit'>Login</Button>
+        </Form>
+      </Segment>
     </div>
   )
 

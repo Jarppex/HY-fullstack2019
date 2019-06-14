@@ -61,7 +61,7 @@ const BlogcreationForm = (props) => {
             onChange={url.onChange}
           />
         </Form.Field>
-        <Button type='submit'>Create</Button>
+        <Button primary size='tiny' type='submit'>Add blog</Button>
       </Form>
     </div>
   )

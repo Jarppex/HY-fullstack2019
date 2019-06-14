@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useEffect }from 'react'
 import { connect } from 'react-redux'
+import { Image, Icon, Card, Button, Label } from 'semantic-ui-react'
 import { setNotification } from '../reducers/notificationReducer'
 import { likeBlog, removeBlog } from '../reducers/blogReducer'
 import { getComments } from '../reducers/commentReducer'
 import CommentForm from './CommentForm'
-import Button from './Button'
 
 const BlogView = (props) => {
 
@@ -53,36 +53,63 @@ const BlogView = (props) => {
   }
 
   const showRemoveButton = () => {
-    return (
-      <Button text='remove'
-        handleClick={() => handleBlogRemove(blog)}
-      />
-    )
+    if (user.name === blog.user.name) {
+      return (
+        <Button size='mini' onClick={() => handleBlogRemove(blog)}>Remove</Button>
+      )
+    }
   }
 
   return (
     <div className='blog'>
-      <div>
-        <h1>{blog.title}</h1>
-        <h2>{blog.author}</h2>
-        <a style={{ display: 'table-cell' }} href={blog.url} target='_blank'>{blog.url}</a>
-        <div>{blog.likes} likes
-          <Button text='like'
-            handleClick={() => like(blog)}
-          />
-        </div>
-        <div>added by {blog.user.name}</div>
-        {user.name === blog.user.name && showRemoveButton()}
-        <h3>comments</h3>
-        <ul>
-          {blogComments.map(comment => {
-            return (
-              <li key={comment.id}>{comment.content}</li>
-            )
-          })}
-        </ul>
-        <CommentForm blog={blog} />
-      </div>
+      <Card>
+        <Image src='' wrapped ui={false} />
+        <Card.Content>
+          <Card.Header>
+            <Icon name='bookmark'/>
+            Blog
+          </Card.Header>
+        </Card.Content>
+        <Card.Content>
+          <br></br>
+          <Card.Header>
+            <div>{blog.title}</div>
+          </Card.Header>
+          <Card.Meta>
+            <div>{blog.author}</div>
+            <span><a style={{ display: 'table-cell' }} href={blog.url} target='_blank'>{blog.url}</a></span>
+          </Card.Meta>
+          <Card.Description>
+          </Card.Description>
+        </Card.Content>
+        <Card.Content>
+          <Button as='div' size='mini' labelPosition='right'>
+            <Button size='mini' color='red' onClick={() => like(blog)}>
+              <Icon name='heart' />
+                  Like
+            </Button>
+            <Label as='a' basic color='red' pointing='left'>
+              {blog.likes}
+            </Label>
+          </Button>
+        </Card.Content>
+        <Card.Content>
+          <div>
+            <em>Added by {user.name === blog.user.name ? 'You' : blog.user.name}</em>
+          </div>
+          <br></br>
+          {showRemoveButton()}
+        </Card.Content>
+      </Card>
+      <h3>Comments</h3>
+      <ul>
+        {blogComments.map(comment => {
+          return (
+            <li key={comment.id}>{comment.content}</li>
+          )
+        })}
+      </ul>
+      <CommentForm blog={blog} />
     </div>
   )
 }

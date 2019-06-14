@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Icon, Card } from 'semantic-ui-react'
+import { Image, Icon, Card, Table } from 'semantic-ui-react'
 
 const UserView = (props) => {
 
@@ -14,8 +14,10 @@ const UserView = (props) => {
         <Card.Content>
           <Card.Header>
             <Icon name='user'/>
+            User
           </Card.Header>
-          <br></br>
+        </Card.Content>
+        <Card.Content>
           <Card.Header>
             {props.user.name}
           </Card.Header>
@@ -27,13 +29,18 @@ const UserView = (props) => {
         </Card.Content>
         <Card.Content>
           <strong>Added blogs</strong>
-          <ul>
-            {props.user.blogs.map(blog => {
-              return (
-                <li key={blog.id}>{blog.title}</li>
-              )
-            })}
-          </ul>
+          <Table striped celled>
+            <Table.Body>
+              {props.user.blogs.map(blog => {
+                return (
+                  <Table.Row key={blog.id}>
+                    <Table.Cell>
+                      <em><div key={blog.id}>{blog.title}</div></em>
+                    </Table.Cell>
+                  </Table.Row>
+                )})}
+            </Table.Body>
+          </Table>
         </Card.Content>
       </Card>
     </div>
