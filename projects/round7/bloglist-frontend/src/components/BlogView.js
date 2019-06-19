@@ -83,12 +83,12 @@ const BlogView = (props) => {
           </Card.Description>
         </Card.Content>
         <Card.Content>
-          <Button as='div' size='mini' labelPosition='right'>
+          <Button id='likeButton'  as='div' size='mini' labelPosition='right'>
             <Button size='mini' color='red' onClick={() => like(blog)}>
               <Icon name='heart' />
                   Like
             </Button>
-            <Label as='a' basic color='red' pointing='left'>
+            <Label id='likes' as='a' basic color='red' pointing='left'>
               {blog.likes}
             </Label>
           </Button>

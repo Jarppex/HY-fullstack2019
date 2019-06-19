@@ -37,6 +37,7 @@ const BlogcreationForm = (props) => {
         <Form.Field required>
           <label>Title</label>
           <input
+            id='title'
             placeholder='Title'
             type={title.type}
             value={title.value}
@@ -46,6 +47,7 @@ const BlogcreationForm = (props) => {
         <Form.Field>
           <label>Author</label>
           <input
+            id='author'
             placeholder='Author'
             type={author.type}
             value={author.value}
@@ -55,13 +57,17 @@ const BlogcreationForm = (props) => {
         <Form.Field required>
           <label>Url</label>
           <input
+            id='url'
             placeholder='Url'
             type={url.type}
             value={url.value}
             onChange={url.onChange}
           />
         </Form.Field>
-        <Button primary size='tiny' type='submit'>Add blog</Button>
+        <Button
+          primary size='tiny' type='submit'>
+          Add blog
+        </Button>
       </Form>
     </div>
   )

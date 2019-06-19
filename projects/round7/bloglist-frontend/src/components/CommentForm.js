@@ -26,6 +26,7 @@ const CommentForm = (props) => {
       <Form onSubmit={handleCommentCreation}>
         <Form.Field>
           <input
+            id='comment'
             placeholder='write a comment..'
             type={comment.type}
             value={comment.value}

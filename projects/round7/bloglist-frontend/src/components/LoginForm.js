@@ -35,12 +35,14 @@ const LoginForm = (props) => {
             <Form.Input
               icon='user' iconPosition='left' label='Username' placeholder='Username'
               type='text' value={username.value} onChange={username.onChange}
+              id='username'
             />
           </Form.Field>
           <Form.Field>
             <Form.Input
               icon='lock' iconPosition='left' label='Password' placeholder='Password'
               type='password' value={password.value} onChange={password.onChange}
+              id='password'
             />
           </Form.Field>
           <Button primary type='submit'>Login</Button>

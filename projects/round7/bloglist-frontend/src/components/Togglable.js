@@ -21,12 +21,16 @@ const Togglable = (props) => {
   return (
     <div>
       <div style={hideWhenVisible}>
-        <Button  style={buttonStyle} primary size='small' onClick={toggleVisibility}>
+        <Button
+          id='openForm' style={buttonStyle}
+          primary size='small' onClick={toggleVisibility}>
           <Icon style={iconStyle} name='plus'/>
         </Button>
       </div>
       <div style={showWhenVisible}>
-        <Button  style={buttonStyle} primary size='small' onClick={toggleVisibility}>
+        <Button
+          id='closeForm' style={buttonStyle}
+          primary size='small' onClick={toggleVisibility}>
           <Icon style={iconStyle} name='minus'/>
         </Button>
         {props.children}
